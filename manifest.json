@@ -18,7 +18,7 @@
         {
             "matches": ["http://*/*"],
             "css": [],
-            "js": [ "./js/curWindos.js" ]
+            "js": [ "./js/curWindow.js" ]
         }
     ],
     "permissions": [
