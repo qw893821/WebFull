@@ -90,5 +90,5 @@ var button1 = document.getElementById("b1");
 button1.addEventListener("click", clicked);
 function clicked() {
     button1.innerHTML++;
-    chrome.runtime.sendMessage("ipficfnjefpfblmpglpcgaijhbfigike", {"action": "open" }, function () { console.log("send"); })
+    chrome.runtime.sendMessage({"action": "open" }, function () { console.log("send"); })
 }
