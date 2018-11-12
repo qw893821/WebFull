@@ -1,0 +1,28 @@
+{
+    "background":{
+        "scripts": ["./js/background.js"],
+        "persistent": false
+    },
+    "description": "Video Full Web Play",
+    "icons": {
+        },
+    "manifest_version": 2,
+    "name": "Full Play",
+    "browser_action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+
+        }
+    },
+    "content_scripts": [
+        {
+            "matches": ["http://*/*"],
+            "css": [],
+            "js": [ "./js/curWindos.js" ]
+        }
+    ],
+    "permissions": [
+        "tabs"
+    ],
+    "version": "1.0"
+}
