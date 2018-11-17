@@ -26,14 +26,16 @@ function searching(dom) {
 //searching(dom);
 //var myWindos = window.open(localnewref, "myWindow", "resizable");
 
-chrome.runtime.onMessage.addListener(function (msg,sender) {
+chrome.runtime.onMessage.addListener(function (msg, sender) {
+    console.log("11");
     if (msg.embed == "on") {
-                                     console.log("window recive");
+        console.log("window recive");
         var dom = window.document.body;
-                                     
+
         searching(dom);
         window.open(localnewref, "myWindow", "resizable");
-        
+
     }
-else{console.log("no recive");}
+    else { console.log("no recive"); }
+    
 });

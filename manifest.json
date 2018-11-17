@@ -22,7 +22,8 @@
         }
     ],
     "permissions": [
-        "tabs"
+        "tabs",
+        "activeTab"
     ],
     "version": "1.0"
 }
