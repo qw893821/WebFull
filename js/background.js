@@ -1,62 +1,35 @@
 "use strict";
-let datajson = /*JSON.parse(*/{
+let datajson = {
     "data":
         [{
             "hname": "www.youtube.com",
-            "rep_hname": "",
+            "rep_hname": null,
             "keyParam": "v",
             "keyWord": ["", ""],
             "fnewPath": "/embed/",
-            "bnewPath": ""
+            "bnewPath": "",
+            "splitLength":"0"
         },
         {
-            "hname": "www.vimeo.com",
+            "hname": "vimeo.com",
             "rep_hname": "player.vimeo.com",
-            "keyParam": "",
-            "keyWord": [".com/", ""],
+            "keyParam": null,
+            "keyWord": "com/\\d*",
             "fnewPath": "/video/",
-            "bnewPath": ""
+            "bnewPath": "",
+            "splitLength": "4"
         },
         {
-            "hname": "www.vimeo.com",
-            "rep_hname": "player.vimeo.com",
-            "keyParam": "",
-            "keyWord": [".com/", ""],
-            "fnewPath": "/video/",
-            "bnewPath": ""
+            "hname": "v.youku.com",
+            "rep_hname": "player.youku.com",
+            "keyParam": null,
+            "keyWord": "id_.*\[=][=]",
+            "fnewPath": "/embed/",
+            "bnewPath": "",
+            "splitLength": "3"
         }
-
         ]
-
-}/*)*/;
-
-//chrome.runtime.onMessage.addListener(function (msg, sender) {
-//    var actionCode = "open";
-//    console.log(msg.action == actionCode);
-//    if (msg.action == actionCode/* && sender == "ipficfnjefpfblmpglpcgaijhbfigike"*/) {
-//        chrome.tabs.query({ 'currentWindow': true, 'active': true }, function (tabs) {
-//            var tempref;
-//            tempref = tabs[0].url;
-//            var newurl = new URL(tempref);
-//            //next step will be a value to replace the "www.youtube.com". use variable rather than magic word
-//            if (newurl.hostname == "www.youtube.com") {
-//                var id;
-//                //"v" is a magic word
-//                id = newurl.searchParams.get("v");
-//                var openURL;
-//                //"embed" is a magic word
-//                openURL = "http://" + newurl.hostname + '/embed/' + id;
-//                console.log(openURL);
-//                window.open(openURL, "myWindow", "resizable");
-
-//            }
-
-//            else {
-//                chrome.tabs.sendMessage(tabs[0].id, { "embed": "on" }, function () { console.log("msg"); });
-//            }
-//        });
-//    };
-//});
+};
 
 
 chrome.runtime.onMessage.addListener(function (msg, sender) {
@@ -68,14 +41,28 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
             tempref = tabs[0].url;
             var newurl = new URL(tempref);
             let ct = searching(datajson, newurl);
-            //next step will be a value to replace the "www.youtube.com". use variable rather than magic word
             if (ct.hname!="") {
                 var id;
-                //"v" is a magic word
-                id = newurl.searchParams.get(ct.keyParam);
+                //video site like youtube have a key to easy find the video id
+                if (ct.keyParam != null) {
+                    id = newurl.searchParams.get(ct.keyParam);
+                }
+                //when there is no key, then find the id from href. it not always work.
+                else {
+                    var re = RegExp(ct.keyWord);
+                    let localid = re.exec(newurl);
+                    id = localid[0];
+                    let charArr = id.split('');
+                    charArr.splice(0, parseInt(ct.splitLength,10)); //remvove "com/" from the id;
+                    id = charArr.join('');
+                    console.log(id);
+                }
                 var openURL;
+                if (ct.rep_hname == null) {
+                    ct.rep_hname = ct.hname;
+                }
                 //ct.hname will be replace. test on youtube now
-                openURL = "http://" + ct.hname + ct.fnewPath + id + ct.fnewPath;
+                openURL = "http://" + ct.rep_hname + ct.fnewPath + id + ct.bnewPath;
                 console.log(openURL);
                 window.open(openURL, "myWindow", "resizable");
 
@@ -88,6 +75,9 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
     };
 });
 
+
+//iterate the stored data, check host name.
+//when host name is found return the data
 function searching(data,url) {
     let output = new Object();
     output.hname="";
@@ -96,6 +86,7 @@ function searching(data,url) {
     output.keyWord = "";
     output.fnewPath = "";
     output.bnewPath = "";
+    output.splitLength = "";
 
     data.data.forEach(function (name) {
         if (name.hname == url.hostname) {
@@ -105,6 +96,7 @@ function searching(data,url) {
             output.keyWord = name.keyWord;
             output.fnewPath = name.fnewPath;
             output.bnewPath = name.bnewPath;
+            output.splitLength = name.splitLength;
             return output;
         }
     });
