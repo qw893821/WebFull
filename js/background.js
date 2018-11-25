@@ -37,10 +37,10 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
     console.log(msg.action == actionCode);
     if (msg.action == actionCode/* && sender == "ipficfnjefpfblmpglpcgaijhbfigike"*/) {
         chrome.tabs.query({ 'currentWindow': true, 'active': true }, function (tabs) {
-            var tempref;
+            let tempref;
             tempref = tabs[0].url;
-            var newurl = new URL(tempref);
-            let ct = searching(datajson, newurl);
+            let newurl = new URL(tempref);
+            let ct = searchURL(datajson, newurl);
             if (ct.hname!="") {
                 var id;
                 //video site like youtube have a key to easy find the video id
@@ -69,7 +69,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
             }
 
             else {
-                chrome.tabs.sendMessage(tabs[0].id, { "embed": "on" }, function () { console.log("msg"); });
+                chrome.tabs.sendMessage(tabs[0].id, { "embed": "on" }, function () { console.log("send to content script"); });
             }
         });
     };
@@ -78,15 +78,16 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
 
 //iterate the stored data, check host name.
 //when host name is found return the data
-function searching(data,url) {
-    let output = new Object();
-    output.hname="";
-    output.rep_hname = "";
-    output.keyParam = "";
-    output.keyWord = "";
-    output.fnewPath = "";
-    output.bnewPath = "";
-    output.splitLength = "";
+function searchURL(data, url) {
+    let output={
+        hname : "",
+        rep_hname: "",
+        keyParam: "",
+        keyWord: "",
+        fnewPath: "",
+        bnewPath: "",
+        splitLength: ""
+    }
 
     data.data.forEach(function (name) {
         if (name.hname == url.hostname) {
@@ -100,16 +101,6 @@ function searching(data,url) {
             return output;
         }
     });
-    //for (var obj in data.data) {
-    //    if (obj.hname == url.hostname) {
-    //        output.hname = obj.hname;
-    //        output.rep_hname = obj.rep_hname;
-    //        output.keyParam = obj.keyParam;
-    //        output.keyWord = obj.keyWord;
-    //        output.fnewPath = obj.fnewPath;
-    //        output.bnewPath = obj.bnewPath;
-    //        return output;
-    //    }
-    //}
+
     return output;
 }

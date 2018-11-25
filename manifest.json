@@ -16,14 +16,15 @@
     },
     "content_scripts": [
         {
-            "matches": ["http://*/*"],
+            "matches": ["http://*/*","https://*/*"],
             "css": [],
             "js": [ "./js/curWindow.js" ]
         }
     ],
     "permissions": [
         "tabs",
-        "activeTab"
+        "activeTab",
+        "storage"
     ],
     "version": "1.0"
 }
