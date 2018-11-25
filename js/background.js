@@ -5,29 +5,38 @@ let datajson = {
             "hname": "www.youtube.com",
             "rep_hname": null,
             "keyParam": "v",
-            "keyWord": ["", ""],
+            "keyWord": null,
             "fnewPath": "/embed/",
             "bnewPath": "",
-            "splitLength":"0"
+            "splitLength": "0"
         },
-        {
-            "hname": "vimeo.com",
-            "rep_hname": "player.vimeo.com",
-            "keyParam": null,
-            "keyWord": "com/\\d*",
-            "fnewPath": "/video/",
-            "bnewPath": "",
-            "splitLength": "4"
-        },
-        {
-            "hname": "v.youku.com",
-            "rep_hname": "player.youku.com",
-            "keyParam": null,
-            "keyWord": "id_.*\[=][=]",
-            "fnewPath": "/embed/",
-            "bnewPath": "",
-            "splitLength": "3"
-        }
+            {
+                "hname": "vimeo.com",
+                "rep_hname": "player.vimeo.com",
+                "keyParam": null,
+                "keyWord": "com/\\d*",
+                "fnewPath": "/video/",
+                "bnewPath": "",
+                "splitLength": "4"
+            },
+            {
+                "hname": "v.youku.com",
+                "rep_hname": "player.youku.com",
+                "keyParam": null,
+                "keyWord": "id_.*\[=][=]",
+                "fnewPath": "/embed/",
+                "bnewPath": "",
+                "splitLength": "3"
+            },
+            {
+                "hname": "www.pornhub.com",
+                "rep_hname": null,
+                "keyParam": "viewkey",
+                "keyWord": null,
+                "fnewPath": "/embed/",
+                "bnewPath": "",
+                "splitLength": "0"
+            }
         ]
 };
 
