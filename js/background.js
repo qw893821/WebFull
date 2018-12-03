@@ -36,7 +36,17 @@ let datajson = {
                 "fnewPath": "/embed/",
                 "bnewPath": "",
                 "splitLength": "0"
-            }
+            },
+            {
+                "hname": "www.bilibili.com",
+                "rep_hname": "player.bilibili.com",
+                "keyParam": null,
+                "keyWord": "av\\d*",
+                "fnewPath": "/player.html?aid=",
+                "bnewPath": "",
+                "splitLength": "2"
+            },
+
         ]
 };
 

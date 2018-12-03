@@ -63,7 +63,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
         else {
             var dom = window.document.body;
             searching(dom);
-            window.open(localnewref, "myWindow", "resizable");
+            window.open(localnewref, "myWindow");
         }
 
     }
