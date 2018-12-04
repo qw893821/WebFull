@@ -15,28 +15,7 @@ let datajson = {
         ]
 };
 
-function searching(dom) {
-    //var localdom = dom;
-    if (localnewref) {
-        return localnewref;
-    }
-    var count;
-    if (!dom) {
-        return;
-    }
-    count = dom.childElementCount;
-    var allchil = dom.children;
-    for (var i = 0; i < count; i++) {
-        var chil = allchil[i];
-        if (chil.tagName == "IFRAME" && chil.src != "" && chil.id != 'buffer') {
-            localnewref = chil.src
-            return localnewref;
-        }
-        else {
-            searching(chil);
-        }
-    }
-}
+
 //var dom = tabs[0].window.document.body;
 //var localnewref;
 //searching(dom);
@@ -67,9 +46,37 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
         }
 
     }
+    else if (msg.embed == "lucky") {
+        embVidSearch();
+    }
     else { console.log("no recive"); }
 });
 
+//iframe video
+function searching(dom) {
+    //var localdom = dom;
+    if (localnewref) {
+        return localnewref;
+    }
+    var count;
+    if (!dom) {
+        return;
+    }
+    count = dom.childElementCount;
+    var allchil = dom.children;
+    for (var i = 0; i < count; i++) {
+        var chil = allchil[i];
+        if (chil.tagName == "IFRAME" && chil.src != "" && chil.id != 'buffer') {
+            localnewref = chil.src
+            return localnewref;
+        }
+        else {
+            searching(chil);
+        }
+    }
+}
+
+//find local storgae video
 function searchID(data, url) {
     let output = {
         hname: "",
@@ -95,4 +102,18 @@ function searchID(data, url) {
     });
 
     return output;
+}
+
+//single embed video
+function embVidSearch() {
+    console.log('dnvod');
+    //first step test on dnvod
+    let emb = document.getElementsByTagName('embed');
+    //get body
+    let b = document.body;
+    //change the parent of emb, test of dnvod with only on embed tag
+    b.appendChild(emb[0]);
+    let domList = b.children;
+    domList = Array.prototype.slice.call(domList);
+    domList.forEach(function (ele) { if (ele != emb[0]) { ele.parentNode.removeChild(ele); console.log(ele); }; });
 }

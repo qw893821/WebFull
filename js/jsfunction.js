@@ -86,9 +86,16 @@ function newPath() {
     //}
     //newPath();
 var button1 = document.getElementById("b1");
+var button2 = document.getElementById("b2");
 //button1.addEventListener("click", newPath);
-button1.addEventListener("click", clicked);
-function clicked() {
+button1.addEventListener("click", btn1clicked);
+button2.addEventListener("click",btn2clicked);
+function btn1clicked() {
     button1.innerHTML++;
-    chrome.runtime.sendMessage({"action": "open" }, function () { console.log("send"); })
+    chrome.runtime.sendMessage({action: "open" }, function () { console.log("send"); })
+}
+
+function btn2clicked() {
+    button2.innerHTML++;
+    chrome.runtime.sendMessage({action: "lucky" }, function() { console.log("btn2 send");})
 }

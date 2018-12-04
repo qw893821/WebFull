@@ -52,15 +52,13 @@ let datajson = {
 
 
 chrome.runtime.onMessage.addListener(function (msg, sender) {
-    var actionCode = "open";
-    console.log(msg.action == actionCode);
-    if (msg.action == actionCode/* && sender == "ipficfnjefpfblmpglpcgaijhbfigike"*/) {
+    if (msg.action == "open"/* && sender == "ipficfnjefpfblmpglpcgaijhbfigike"*/) {
         chrome.tabs.query({ 'currentWindow': true, 'active': true }, function (tabs) {
             let tempref;
             tempref = tabs[0].url;
             let newurl = new URL(tempref);
             let ct = searchURL(datajson, newurl);
-            if (ct.hname!="") {
+            if (ct.hname != "") {
                 var id;
                 //video site like youtube have a key to easy find the video id
                 if (ct.keyParam != null) {
@@ -72,7 +70,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
                     let localid = re.exec(newurl);
                     id = localid[0];
                     let charArr = id.split('');
-                    charArr.splice(0, parseInt(ct.splitLength,10)); //remvove "com/" from the id;
+                    charArr.splice(0, parseInt(ct.splitLength, 10)); //remvove "com/" from the id;
                     id = charArr.join('');
                     console.log(id);
                 }
@@ -83,15 +81,20 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
                 //ct.hname will be replace. test on youtube now
                 openURL = "http://" + ct.rep_hname + ct.fnewPath + id + ct.bnewPath;
                 console.log(openURL);
-                window.open(openURL, "myWindow", "resizable");
+                window.open(openURL, "myWindow");
 
             }
 
             else {
-                chrome.tabs.sendMessage(tabs[0].id, { "embed": "on" }, function () { console.log("send to content script"); });
+                chrome.tabs.sendMessage(tabs[0].id, { embed: "on" }, function () { console.log("send to content script"); });
             }
         });
-    };
+    }
+    else if (msg.action == "lucky") {
+        chrome.tabs.query({ 'currentWindow': true, 'active': true }, function (tabs) {
+            chrome.tabs.sendMessage(tabs[0].id, { embed: "lucky" }, function () { console.log("btn2 send"); })
+        })
+    }
 });
 
 
