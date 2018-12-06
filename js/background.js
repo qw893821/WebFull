@@ -46,7 +46,25 @@ let datajson = {
                 "bnewPath": "",
                 "splitLength": "2"
             },
-
+            {
+                "hname": "www.dailymotion.com",
+                "rep_hname": null,
+                "keyParam": null,
+                "keyWord": "video/\.*",
+                "fnewPath": "/embed/video/",
+                
+                "bnewPath": "",
+                "splitLength": "6"
+            },
+            {
+                "hname": "www.twitch.tv",
+                "rep_hname": "player.twitch.tv",
+                "keyParam": null,
+                "keyWord": "tv/\.*",
+                "fnewPath": "/?channel=",
+                "bnewPath": "",
+                "splitLength": "3"
+            }
         ]
 };
 
