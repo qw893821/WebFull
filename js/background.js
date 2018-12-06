@@ -68,6 +68,12 @@ let datajson = {
         ]
 };
 
+//a list of list which user use this extension to open
+let preSiteList={
+	"val":[
+	]
+}
+
 
 chrome.runtime.onMessage.addListener(function (msg, sender) {
     if (msg.action == "open"/* && sender == "ipficfnjefpfblmpglpcgaijhbfigike"*/) {
@@ -97,9 +103,13 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
                     ct.rep_hname = ct.hname;
                 }
                 //ct.hname will be replace. test on youtube now
-                openURL = "http://" + ct.rep_hname + ct.fnewPath + id + ct.bnewPath;
-                console.log(openURL);
+                openURL = "https://" + ct.rep_hname + ct.fnewPath + id + ct.bnewPath;
                 window.open(openURL, "myWindow");
+				const sitePair={
+					preHref:tempref,
+					curHref:openURL
+				}
+				preSiteList.val.push(sitePair);
 
             }
 
@@ -113,9 +123,34 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
             chrome.tabs.sendMessage(tabs[0].id, { embed: "lucky" }, function () { console.log("btn2 send"); })
         })
     }
+
+	else if(msg.action=="return"){
+		console.log("return get")
+		chrome.tabs.query({ 'currentWindow': true, 'active': true }, function (tabs) {
+			const prePair=pairSearch(preSiteList.val,tabs[0].url);
+			console.log(prePair);
+            chrome.tabs.sendMessage(tabs[0].id, { embed: "return",presite:prePair.preHref }, function () { 
+			preSiteList.val.splice(prePair.pairIndex,1);
+			console.log("return send"); })
+        })
+	}
 });
 
+function pairSearch(pair,target){
+	const cst={
+		pairIndex:null,
+		preHref:null
+	}
+	for(var i=0;i<pair.length;i++){
+		if(pair[i].curHref==target){
+			cst.pairIndex=i;
+			cst.preHref=pair[i].preHref;
+			return cst;
+		}
+	}
+	return -1;
 
+}
 //iterate the stored data, check host name.
 //when host name is found return the data
 function searchURL(data, url) {

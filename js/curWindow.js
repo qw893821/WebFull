@@ -49,7 +49,9 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
     else if (msg.embed == "lucky") {
         embVidSearch();
     }
-    else { console.log("no recive"); }
+    else if(msg.embed=="return"){
+		window.location=msg.presite;
+	}
 });
 
 //iframe video
