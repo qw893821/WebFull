@@ -103,3 +103,11 @@ function btn2clicked() {
 function returnPre(){
         chrome.runtime.sendMessage({action: "return" }, function() { console.log("return send");})
 }
+
+chrome.runtime.onMessage.addListener(function(msg,sender){
+	
+	if(msg.data=="NotVid"){
+		console.log("got msg");
+		document.getElementById("msg").innerHTML="not found";
+	}
+})

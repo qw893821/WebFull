@@ -1,7 +1,8 @@
 {
     "background":{
-        "scripts": ["./js/background.js"],
+		"scripts":["./js/background.js","./js/modular.js"],
         "persistent": false
+		
     },
     "description": "Video Full Web Play",
     "icons": {

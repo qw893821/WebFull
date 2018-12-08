@@ -1,4 +1,5 @@
 "use strict";
+//import * as myModule from './modular.js';
 let datajson = {
     "data":
         [{
@@ -82,11 +83,17 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
             tempref = tabs[0].url;
             let newurl = new URL(tempref);
             let ct = searchURL(datajson, newurl);
+			//let ct=myModule.dataSearching(datajson, newurl);
             if (ct.hname != "") {
                 var id;
                 //video site like youtube have a key to easy find the video id
                 if (ct.keyParam != null) {
                     id = newurl.searchParams.get(ct.keyParam);
+					if(!id){
+						chrome.runtime.sendMessage({data:"NotVid"},function(){console.log("send to pop");})
+						return;
+					}
+					console.log(id);
                 }
                 //when there is no key, then find the id from href. it not always work.
                 else {
@@ -104,7 +111,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
                 }
                 //ct.hname will be replace. test on youtube now
                 openURL = "https://" + ct.rep_hname + ct.fnewPath + id + ct.bnewPath;
-                window.open(openURL, "myWindow");
+                window.open(openURL);
 				const sitePair={
 					preHref:tempref,
 					curHref:openURL
@@ -175,6 +182,7 @@ function searchURL(data, url) {
             output.splitLength = name.splitLength;
             return output;
         }
+
     });
 
     return output;

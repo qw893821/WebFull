@@ -16,11 +16,6 @@ let datajson = {
 };
 
 
-//var dom = tabs[0].window.document.body;
-//var localnewref;
-//searching(dom);
-//var myWindos = window.open(localnewref, "myWindow", "resizable");
-
 chrome.runtime.onMessage.addListener(function (msg, sender) {
     console.log('from back end');
     if (msg.embed == "on") {
@@ -37,12 +32,12 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
             charArr.splice(0, parseInt(ct.splitLength, 10))
             id = charArr.join('');
             let openURL = "http://" + ct.rep_hname + ct.fnewPath + id + ct.bnewPath;
-            window.open(openURL, "myWindow", "resizable");
+            window.open(openURL);
         }
         else {
             var dom = window.document.body;
             searching(dom);
-            window.open(localnewref, "myWindow");
+            window.open(localnewref);
         }
 
     }
