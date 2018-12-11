@@ -1,4 +1,8 @@
 "use strict"
+
+//import is not will supported in content script. When injected by a handler, this script will not have access of chrome.runtime object. so not use import at current state.
+//import { dataSearching as searchID } from "./modular.js";
+
 let localnewref;
 //this part of site do not have direct video id show in the domin, need check the local storage to find the right video.
 let datajson = {

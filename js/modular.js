@@ -1,5 +1,5 @@
-"use strict"
-export {dataSearching};
+export { dataSearching };
+
 function dataSearching(data, url) {
     let output = {
         hname: "",

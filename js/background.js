@@ -1,5 +1,6 @@
 "use strict";
-//import * as myModule from './modular.js';
+import { dataSearching as searchURL } from "./modular.js";
+
 let datajson = {
     "data":
         [{
@@ -160,30 +161,30 @@ function pairSearch(pair,target){
 }
 //iterate the stored data, check host name.
 //when host name is found return the data
-function searchURL(data, url) {
-    let output={
-        hname : "",
-        rep_hname: "",
-        keyParam: "",
-        keyWord: "",
-        fnewPath: "",
-        bnewPath: "",
-        splitLength: ""
-    }
+//function searchURL(data, url) {
+//    let output={
+//        hname : "",
+//        rep_hname: "",
+//        keyParam: "",
+//        keyWord: "",
+//        fnewPath: "",
+//        bnewPath: "",
+//        splitLength: ""
+//    }
 
-    data.data.forEach(function (name) {
-        if (name.hname == url.hostname) {
-            output.hname = name.hname;
-            output.rep_hname = name.rep_hname;
-            output.keyParam = name.keyParam;
-            output.keyWord = name.keyWord;
-            output.fnewPath = name.fnewPath;
-            output.bnewPath = name.bnewPath;
-            output.splitLength = name.splitLength;
-            return output;
-        }
+//    data.data.forEach(function (name) {
+//        if (name.hname == url.hostname) {
+//            output.hname = name.hname;
+//            output.rep_hname = name.rep_hname;
+//            output.keyParam = name.keyParam;
+//            output.keyWord = name.keyWord;
+//            output.fnewPath = name.fnewPath;
+//            output.bnewPath = name.bnewPath;
+//            output.splitLength = name.splitLength;
+//            return output;
+//        }
 
-    });
+//    });
 
-    return output;
-}
+//    return output;
+//}
