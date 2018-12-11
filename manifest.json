@@ -1,7 +1,8 @@
 {
     "background":{
-        "scripts": ["./js/background.js"],
+		"page": "./background.html",
         "persistent": false
+		
     },
     "description": "Video Full Web Play",
     "icons": {
@@ -16,9 +17,9 @@
     },
     "content_scripts": [
         {
-            "matches": ["http://*/*","https://*/*"],
+            "matches": [ "http://*/*", "https://*/*" ],
             "css": [],
-            "js": [ "./js/curWindow.js" ]
+            "js": [ "./js/curWindow.js"]
         }
     ],
     "permissions": [
@@ -26,5 +27,5 @@
         "activeTab",
         "storage"
     ],
-    "version": "1.0"
+    "version": "1.0.0.5"
 }

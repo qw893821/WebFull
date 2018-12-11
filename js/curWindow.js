@@ -1,4 +1,8 @@
 "use strict"
+
+//import is not will supported in content script. When injected by a handler, this script will not have access of chrome.runtime object. so not use import at current state.
+//import { dataSearching as searchID } from "./modular.js";
+
 let localnewref;
 //this part of site do not have direct video id show in the domin, need check the local storage to find the right video.
 let datajson = {
@@ -15,6 +19,41 @@ let datajson = {
         ]
 };
 
+
+chrome.runtime.onMessage.addListener(function (msg, sender) {
+    console.log('from back end');
+    if (msg.embed == "on") {
+        let hr = window.location.href;
+        let newurl = new URL(hr);
+        let ct = searchID(datajson, newurl);
+        if (ct.hname != "") {
+            let id;
+            let localkey = localStorage.getItem(ct.keyParam);
+            let re =new RegExp(ct.keyWord);
+            let localid = re.exec(localkey);
+            id = localid[0];
+            let charArr = id.split('');
+            charArr.splice(0, parseInt(ct.splitLength, 10))
+            id = charArr.join('');
+            let openURL = "http://" + ct.rep_hname + ct.fnewPath + id + ct.bnewPath;
+            window.open(openURL);
+        }
+        else {
+            var dom = window.document.body;
+            searching(dom);
+            window.open(localnewref);
+        }
+
+    }
+    else if (msg.embed == "lucky") {
+        embVidSearch();
+    }
+    else if(msg.embed=="return"){
+		window.location=msg.presite;
+	}
+});
+
+//iframe video
 function searching(dom) {
     //var localdom = dom;
     if (localnewref) {
@@ -37,39 +76,8 @@ function searching(dom) {
         }
     }
 }
-//var dom = tabs[0].window.document.body;
-//var localnewref;
-//searching(dom);
-//var myWindos = window.open(localnewref, "myWindow", "resizable");
 
-chrome.runtime.onMessage.addListener(function (msg, sender) {
-    console.log('from back end');
-    if (msg.embed == "on") {
-        let hr = window.location.href;
-        let newurl = new URL(hr);
-        let ct = searchID(datajson, newurl);
-        if (ct.hname != "") {
-            let id;
-            let localkey = localStorage.getItem(ct.keyParam);
-            let re =new RegExp(ct.keyWord);
-            let localid = re.exec(localkey);
-            id = localid[0];
-            let charArr = id.split('');
-            charArr.splice(0, parseInt(ct.splitLength, 10))
-            id = charArr.join('');
-            let openURL = "http://" + ct.rep_hname + ct.fnewPath + id + ct.bnewPath;
-            window.open(openURL, "myWindow", "resizable");
-        }
-        else {
-            var dom = window.document.body;
-            searching(dom);
-            window.open(localnewref, "myWindow", "resizable");
-        }
-
-    }
-    else { console.log("no recive"); }
-});
-
+//find local storgae video
 function searchID(data, url) {
     let output = {
         hname: "",
@@ -95,4 +103,18 @@ function searchID(data, url) {
     });
 
     return output;
+}
+
+//single embed video
+function embVidSearch() {
+    console.log('dnvod');
+    //first step test on dnvod
+    let emb = document.getElementsByTagName('embed');
+    //get body
+    let b = document.body;
+    //change the parent of emb, test of dnvod with only on embed tag
+    b.appendChild(emb[0]);
+    let domList = b.children;
+    domList = Array.prototype.slice.call(domList);
+    domList.forEach(function (ele) { if (ele != emb[0]) { ele.parentNode.removeChild(ele); console.log(ele); }; });
 }
