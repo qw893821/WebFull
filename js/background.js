@@ -148,7 +148,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
 	else if(msg.action=="urlRequest"){
 		console.log("here i send a list");
 		chrome.tabs.query({ 'currentWindow': true, 'active': true }, function (tabs) {
-		chrome.tabs.sendMessage(tabs[0s].id, { data: "List" }, function () { console.log("return now"); })
+		chrome.tabs.sendMessage(tabs[0].id, { data: "List" }, function () { console.log("return now"); })
 	})
 	}
 });
