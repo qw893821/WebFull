@@ -76,7 +76,6 @@ let preSiteList={
 	]
 }
 
-
 chrome.runtime.onMessage.addListener(function (msg, sender) {
     if (msg.action == "open"/* && sender == "ipficfnjefpfblmpglpcgaijhbfigike"*/) {
         chrome.tabs.query({ 'currentWindow': true, 'active': true }, function (tabs) {
@@ -102,7 +101,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
                     let localid = re.exec(newurl);
                     id = localid[0];
                     let charArr = id.split('');
-                    charArr.splice(0, parseInt(ct.splitLength, 10)); //remvove "com/" from the id;
+                    charArr.splice(0, parseInt(ct.splitLength, 10));
                     id = charArr.join('');
                     console.log(id);
                 }
@@ -110,7 +109,6 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
                 if (ct.rep_hname == null) {
                     ct.rep_hname = ct.hname;
                 }
-                //ct.hname will be replace. test on youtube now
                 openURL = "https://" + ct.rep_hname + ct.fnewPath + id + ct.bnewPath;
                 window.open(openURL);
 				const sitePair={
@@ -118,6 +116,8 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
 					curHref:openURL
 				}
 				preSiteList.val.push(sitePair);
+				//this is no possible when cross origin
+				//newwindow.sessionStorage.setItem("sitePair",`${sitePair.preHref},${sitePair.curHref}`);
 
             }
 
@@ -133,16 +133,26 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
     }
 
 	else if(msg.action=="return"){
-		console.log("return get")
-		chrome.tabs.query({ 'currentWindow': true, 'active': true }, function (tabs) {
+		console.log("return get");
+		/*chrome.tabs.query({ 'currentWindow': true, 'active': true }, function (tabs) {
+			
 			const prePair=pairSearch(preSiteList.val,tabs[0].url);
-			console.log(prePair);
             chrome.tabs.sendMessage(tabs[0].id, { embed: "return",presite:prePair.preHref }, function () { 
 			preSiteList.val.splice(prePair.pairIndex,1);
 			console.log("return send"); })
+        })*/
+		chrome.tabs.query({ 'currentWindow': true, 'active': true }, function (tabs) {
+            chrome.tabs.sendMessage(tabs[0].id, { embed: "return" }, function () { console.log("return now"); })
         })
 	}
+	else if(msg.action=="urlRequest"){
+		console.log("here i send a list");
+		chrome.tabs.query({ 'currentWindow': true, 'active': true }, function (tabs) {
+		chrome.tabs.sendMessage(tabs[0s].id, { data: "List" }, function () { console.log("return now"); })
+	})
+	}
 });
+
 
 function pairSearch(pair,target){
 	const cst={
@@ -159,32 +169,3 @@ function pairSearch(pair,target){
 	return -1;
 
 }
-//iterate the stored data, check host name.
-//when host name is found return the data
-//function searchURL(data, url) {
-//    let output={
-//        hname : "",
-//        rep_hname: "",
-//        keyParam: "",
-//        keyWord: "",
-//        fnewPath: "",
-//        bnewPath: "",
-//        splitLength: ""
-//    }
-
-//    data.data.forEach(function (name) {
-//        if (name.hname == url.hostname) {
-//            output.hname = name.hname;
-//            output.rep_hname = name.rep_hname;
-//            output.keyParam = name.keyParam;
-//            output.keyWord = name.keyWord;
-//            output.fnewPath = name.fnewPath;
-//            output.bnewPath = name.bnewPath;
-//            output.splitLength = name.splitLength;
-//            return output;
-//        }
-
-//    });
-
-//    return output;
-//}

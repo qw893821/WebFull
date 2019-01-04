@@ -4,6 +4,9 @@
 //import { dataSearching as searchID } from "./modular.js";
 
 let localnewref;
+
+//the return url 
+let returnRef;
 //this part of site do not have direct video id show in the domin, need check the local storage to find the right video.
 let datajson = {
     "data":
@@ -49,9 +52,13 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
         embVidSearch();
     }
     else if(msg.embed=="return"){
-		window.location=msg.presite;
+		window.location=returnRef;
+	}
+	if(msg.action=="List"){
+		console.log("get return list"+" "+"todo	");
 	}
 });
+
 
 //iframe video
 function searching(dom) {
@@ -117,4 +124,15 @@ function embVidSearch() {
     let domList = b.children;
     domList = Array.prototype.slice.call(domList);
     domList.forEach(function (ele) { if (ele != emb[0]) { ele.parentNode.removeChild(ele); console.log(ele); }; });
+}
+
+function requestReturn(){
+	chrome.runtime.sendMessage({"action":"urlRequest"},function(){console.log("return url request send")});
+}
+
+if(document.readyState==="loading"){
+	document.addEventListener("DOMContentLoaded",requestReturn);
+}
+else {
+	requestReturn();
 }
