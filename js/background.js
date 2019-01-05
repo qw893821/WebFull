@@ -149,7 +149,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
 		//console.log("here i send a list");
 		//chrome.tabs.query({ 'currentWindow': true, 'active': true }, function (tabs) {
 		//chrome.tabs.sendMessage(tabs[0].id, { data: "List" }, function () { console.log("return now"); })
-	})
+	
 	}
 });
 

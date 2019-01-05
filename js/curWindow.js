@@ -24,12 +24,12 @@ let datajson = {
 
 
 chrome.runtime.onMessage.addListener(function (msg, sender) {
-    console.log(msg.embed);
     if (msg.embed == "on") {
         let hr = window.location.href;
         let newurl = new URL(hr);
         let ct = searchID(datajson, newurl);
         if (ct.hname != "") {
+            console.log("this site is in list");
             let id;
             let localkey = localStorage.getItem(ct.keyParam);
             let re =new RegExp(ct.keyWord);
@@ -42,6 +42,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
             window.open(openURL);
         }
         else {
+            console.log("this site is not in list");
             var dom = window.document.body;
             searching(dom);
             window.open(localnewref);
