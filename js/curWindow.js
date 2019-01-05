@@ -24,7 +24,7 @@ let datajson = {
 
 
 chrome.runtime.onMessage.addListener(function (msg, sender) {
-    console.log('from back end');
+    console.log(msg.embed);
     if (msg.embed == "on") {
         let hr = window.location.href;
         let newurl = new URL(hr);
@@ -126,7 +126,8 @@ function embVidSearch() {
     domList.forEach(function (ele) { if (ele != emb[0]) { ele.parentNode.removeChild(ele); console.log(ele); }; });
 }
 
-function requestReturn(){
+function requestReturn() {
+    localStorage.setItem("currentURL",window.location.href);
 	chrome.runtime.sendMessage({"action":"urlRequest"},function(){console.log("return url request send")});
 }
 
