@@ -45,7 +45,8 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
             console.log("this site is not in list");
             var dom = window.document.body;
             searching(dom);
-            window.open(localnewref);
+            //window.open(localnewref);
+            window.location = localnewref;
         }
 
     }

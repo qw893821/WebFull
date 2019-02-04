@@ -1,6 +1,15 @@
 "use strict";
 import { dataSearching as searchURL } from "./modular.js";
 
+/*how this json works and what each part means
+ * 1. host name
+ * 2. new name which will replace the old name
+ * 3. if there is a query which locate, than thing is easy to be done, use the query key param and find the id, when there is no such id, go 4
+ * 4. this is the regular expression should to find the id of each video
+ * 5. the new path before id
+ * 6. the new path after id
+ * 7. when suing re find the new id name. extra content will show in the founded id. use this number to remove the extra content
+*/
 let datajson = {
     "data":
         [{
@@ -53,8 +62,7 @@ let datajson = {
                 "rep_hname": null,
                 "keyParam": null,
                 "keyWord": "video/\.*",
-                "fnewPath": "/embed/video/",
-                
+                "fnewPath": "/embed/video/",               
                 "bnewPath": "",
                 "splitLength": "6"
             },
@@ -66,6 +74,15 @@ let datajson = {
                 "fnewPath": "/?channel=",
                 "bnewPath": "",
                 "splitLength": "3"
+            },
+            {
+                "hname": "www.lynda.com",
+                "rep_hname": null,
+                "keyParam": null,
+                "keyWord": "/\\d\\d*/\\d*",
+                "fnewPath": "/player/embed/",
+                "bnewPath": "?fs=3",
+                "splitLength": "7"
             }
         ]
 };
@@ -98,6 +115,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
                 //when there is no key, then find the id from href. it not always work.
                 else {
                     var re = RegExp(ct.keyWord);
+                    console.log(newurl);
                     let localid = re.exec(newurl);
                     id = localid[0];
                     let charArr = id.split('');
@@ -111,6 +129,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
                 }
                 openURL = "https://" + ct.rep_hname + ct.fnewPath + id + ct.bnewPath;
                 window.open(openURL);
+                //window.location = openURL;
 				const sitePair={
 					preHref:tempref,
 					curHref:openURL
@@ -118,7 +137,6 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
 				preSiteList.val.push(sitePair);
 				//this is no possible when cross origin
 				//newwindow.sessionStorage.setItem("sitePair",`${sitePair.preHref},${sitePair.curHref}`);
-
             }
 
             else {

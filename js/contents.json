@@ -1,10 +1,10 @@
 {
-        "data":
-        [{
+    "data": [
+        {
             "hname": "www.youtube.com",
             "rep_hname": "",
             "keyParam": "v",
-            "keyWord": ["", ""],
+            "keyWord": [ "", "" ],
             "fnewPath": "/embed/",
             "bnewPath": ""
         },
@@ -12,7 +12,7 @@
             "hname": "www.vimeo.com",
             "rep_hname": "player.vimeo.com",
             "keyParam": "",
-            "keyWord": [".com/", ""],
+            "keyWord": [ ".com/", "" ],
             "fnewPath": "/video/",
             "bnewPath": ""
         },
@@ -20,11 +20,11 @@
             "hname": "www.vimeo.com",
             "rep_hname": "player.vimeo.com",
             "keyParam": "",
-            "keyWord": [".com/", ""],
+            "keyWord": [ ".com/", "" ],
             "fnewPath": "/video/",
             "bnewPath": ""
         }
 
-        ]
-    
-}
+    ]
+} 
+

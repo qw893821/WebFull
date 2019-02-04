@@ -54,7 +54,6 @@ function newPath() {
     var newrefstring = newref.join("");
     newrefstring = "http://www.youtube.com/embed/" + newrefstring;
      window.open(newrefstring, "myWindow", "resizable");
-        //var myWindow = window.open(newrefstring, "myWindow", "resizable");
         console.log(newrefstring);
     }
 
