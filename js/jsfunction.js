@@ -86,7 +86,6 @@ function newPath() {
     //newPath();
 var button1 = document.getElementById("b1");
 var button2 = document.getElementById("b2");
-//button1.addEventListener("click", newPath);
 button1.addEventListener("click", btn1clicked);
 button2.addEventListener("click",btn2clicked);
 function btn1clicked() {

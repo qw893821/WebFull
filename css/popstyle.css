@@ -1,7 +1,13 @@
-﻿body
-{
+﻿body {
 }
 
+#container {
+    width: 220px;
+    height: 200px;
+    resize: none;
+    align-content: center;
+    margin: 0 auto;
+}
 button{
     background:#6cb200;
     width:150px;
