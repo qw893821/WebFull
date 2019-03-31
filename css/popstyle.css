@@ -16,3 +16,7 @@ button{
     border-radius:5px;
     margin-top:10px;
 }
+
+.jumpBtn {
+    width:50px;
+}

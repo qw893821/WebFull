@@ -87,11 +87,11 @@ function newPath() {
     //newPath();
 let button1 = document.getElementById("b1");
 let button2 = document.getElementById("b2");
-let returnBtn=document.getElementById("return");
+//let returnBtn=document.getElementById("return");
 //button1.addEventListener("click", newPath);
 button1.addEventListener("click", btn1clicked);
 button2.addEventListener("click",btn2clicked);
-returnBtn.addEventListener("click",returnPre);
+//returnBtn.addEventListener("click",returnPre);
 function btn1clicked() {
     chrome.runtime.sendMessage({action: "open" }, function () { console.log("send"); })
 }

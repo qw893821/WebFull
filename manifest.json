@@ -6,7 +6,11 @@
     },
     "description": "Video Full Web Play",
     "icons": {
-        },
+        "16": "./icons/icon16.png",
+        "48": "./icons/icon48.png",
+        "64": "./icons/icon64.png",
+        "128": "./icons/icon128.png"
+    },
     "manifest_version": 2,
     "name": "Full Play",
     "browser_action": {
@@ -27,5 +31,5 @@
         "activeTab",
         "storage"
     ],
-    "version": "1.0.1.0"
+    "version": "1.0.1.6"
 }
